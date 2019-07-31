@@ -7,17 +7,16 @@ generate_data <- function(n, p) {
 }
 
 model_select <- function(covariates, responses, cutoff) {
-  fit1 <- lm(responses ~ covariates[,c(1, ncol(covariates))])
-  bool_ind <- ((summary(fit1)$coefficients[,4]) <= cutoff)
-  bool_ind <- as.vector(bool_ind)
-  if (all(bool_ind == FALSE)) {
+  fit1 <- lm(responses ~ covariates)
+  pvals <- summary(fit1)$coefficients[,4][-1]
+  ind <- which(pvals <= cutoff)
+  if (length(ind) == 0) {
     return (vector())
   }
-  mat2 <- covariates[,bool_ind]
-  fit2 <- lm(responses ~ mat2)
-  res <- (summary(fit2)$coefficients[,4][2])
+  fit2 <- lm(responses ~ covariates[,ind])
+  res <- (summary(fit2)$coefficients[,4][-1])
   res <- as.vector(res)
-  res
+  res 
 }
 
 run_simulation <- function(n_trials, n, p, cutoff) {
