@@ -20,3 +20,15 @@ model_select <- function(covariates, responses, cutoff) {
   res
 }
 
+run_simulation <- function(n_trials, n, p, cutoff) {
+  pvalues <- vector()
+  for (i in 1:n_trials) {
+    res <- generate_data(n, p)
+    cov <- res$covariates
+    resp <- res$responses
+    pval <- model_select(cov, resp, cutoff)
+    pvalues <- c(pvalues, pval)
+  }
+  hist(pvalues)
+}
+
