@@ -19,6 +19,7 @@ model_select <- function(covariates, responses, cutoff) {
   res 
 }
 
+#it does not seem like it's uniformly distributed
 run_simulation <- function(n_trials, n, p, cutoff) {
   pvalues <- vector()
   for (i in 1:n_trials) {
@@ -31,3 +32,12 @@ run_simulation <- function(n_trials, n, p, cutoff) {
   hist(pvalues)
 }
 
+n <- c(100, 1000, 10000)
+p <- c(10, 20, 50)
+n_trials <- 1000
+cutoff <- 0.05
+for (i in n) {
+  for (j in p) {
+    run_simulation(n_trials, i, j, cutoff)
+  }
+}
