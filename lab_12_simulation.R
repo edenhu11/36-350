@@ -11,7 +11,7 @@ model_select <- function(covariates, responses, cutoff) {
   pvals <- summary(fit1)$coefficients[,4][-1]
   ind <- which(pvals <= cutoff)
   if (length(ind) == 0) {
-    return (vector())
+    return (as.numeric(c()))
   }
   fit2 <- lm(responses ~ covariates[,ind])
   res <- (summary(fit2)$coefficients[,4][-1])
